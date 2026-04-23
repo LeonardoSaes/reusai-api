@@ -32,6 +32,7 @@ public class UpdateItemUsecaseImpl implements UpdateItemUsecase {
         existItem.setStatus(item.getStatus());
         existItem.setImageUrl(item.getImageUrl());
         existItem.setTitle(item.getTitle());
+        existItem.setAvailableToChange(item.getAvailableToChange());
         itemGateway.updateItem(existItem);
     }
 }

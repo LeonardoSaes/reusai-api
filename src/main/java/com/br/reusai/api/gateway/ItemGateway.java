@@ -8,5 +8,4 @@ public interface ItemGateway {
     void updateItem(Item item);
     Item getItemById(String id);
 
-
 }

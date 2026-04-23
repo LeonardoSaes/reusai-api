@@ -34,6 +34,9 @@ public class ItemEntity {
     @Column(nullable = false)
     private StatusEnum status;
 
+    @Column(nullable = false)
+    private Boolean availableToChange;
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

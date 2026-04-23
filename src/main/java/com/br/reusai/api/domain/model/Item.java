@@ -17,6 +17,7 @@ public class Item {
     private String category;
     private String imageUrl;
     private StatusEnum status;
+    private Boolean availableToChange;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
