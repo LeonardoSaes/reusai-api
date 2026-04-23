@@ -22,7 +22,7 @@ public class ItemEntity {
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Column(nullable = false, unique = true, length = 150)
+    @Column(nullable = false, length = 150)
     private String description;
 
     @Column(nullable = false, length = 255)
@@ -37,6 +37,6 @@ public class ItemEntity {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime updatedAt;
 }

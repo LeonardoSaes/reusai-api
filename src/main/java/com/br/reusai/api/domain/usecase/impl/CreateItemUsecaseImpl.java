@@ -16,11 +16,7 @@ public class CreateItemUsecaseImpl implements CreateItemUsecase {
 
     @Override
     public String execute(Item item) throws RuntimeException{
-        Item existItem = itemGateway.getItemPerTitle(item.getTitle());
 
-//        if(isNull(existItem)){
-//            throw new RuntimeException("Item not exist");
-//        }
         item.setCreatedAt(LocalDateTime.now());
         item.setUpdatedAt(LocalDateTime.now());
         return itemGateway.createItem(item);
