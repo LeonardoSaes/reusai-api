@@ -23,4 +23,14 @@ public class ItemGatewayImpl implements ItemGateway {
     public Item getItemPerTitle(String title) {
         return itemGatewayConverter.toDomain(itemRepository.findItemByTitle(title));
     }
+
+    @Override
+    public void updateItem(Item item) {
+        itemRepository.save(itemGatewayConverter.toEntity(item));
+    }
+
+    @Override
+    public Item getItemById(String id) {
+        return itemGatewayConverter.toDomain(itemRepository.findItemById(id));
+    }
 }
