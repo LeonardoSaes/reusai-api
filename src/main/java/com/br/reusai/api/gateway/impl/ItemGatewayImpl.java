@@ -4,6 +4,7 @@ import com.br.reusai.api.domain.model.Item;
 import com.br.reusai.api.gateway.ItemGateway;
 import com.br.reusai.api.gateway.converter.ItemGatewayConverter;
 import com.br.reusai.api.gateway.mysql.repository.ItemRepository;
+import com.br.reusai.api.host.controller.data.response.CreateItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +16,8 @@ public class ItemGatewayImpl implements ItemGateway {
     private final ItemGatewayConverter itemGatewayConverter;
 
     @Override
-    public String createItem(Item item) {
-        return itemRepository.save(itemGatewayConverter.toEntity(item)).getId().toString();
+    public CreateItemResponse createItem(Item item) {
+        return itemGatewayConverter.toCreateItemResponse(itemRepository.save(itemGatewayConverter.toEntity(item)));
     }
 
     @Override
@@ -32,5 +33,10 @@ public class ItemGatewayImpl implements ItemGateway {
     @Override
     public Item getItemById(String id) {
         return itemGatewayConverter.toDomain(itemRepository.findItemById(id));
+    }
+
+    @Override
+    public void deleteItem(String id) {
+        itemRepository.deleteById(id);
     }
 }
