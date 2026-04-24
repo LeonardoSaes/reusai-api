@@ -4,12 +4,14 @@ import com.br.reusai.api.domain.model.Item;
 import com.br.reusai.api.domain.usecase.UpdateItemUsecase;
 import com.br.reusai.api.gateway.ItemGateway;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 import static java.util.Objects.isNull;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UpdateItemUsecaseImpl implements UpdateItemUsecase {
@@ -22,6 +24,7 @@ public class UpdateItemUsecaseImpl implements UpdateItemUsecase {
         Item existItem = itemGateway.getItemById(id);
 
         if(isNull(existItem)){
+            log.error("Item not exist");
             throw new RuntimeException("Item not exist");
         }
 
@@ -34,5 +37,6 @@ public class UpdateItemUsecaseImpl implements UpdateItemUsecase {
         existItem.setTitle(item.getTitle());
         existItem.setAvailableToChange(item.getAvailableToChange());
         itemGateway.updateItem(existItem);
+        log.info("Item updated successfully");
     }
 }
