@@ -1,5 +1,6 @@
 package com.br.reusai.api.domain.usecase.impl;
 
+import com.br.reusai.api.domain.exception.BusinessException;
 import com.br.reusai.api.domain.model.Item;
 import com.br.reusai.api.domain.usecase.UpdateItemUsecase;
 import com.br.reusai.api.gateway.ItemGateway;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 import static java.util.Objects.isNull;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_CONTENT;
 
 @Slf4j
 @Component
@@ -25,7 +27,7 @@ public class UpdateItemUsecaseImpl implements UpdateItemUsecase {
 
         if(isNull(existItem)){
             log.error("Item not exist");
-            throw new RuntimeException("Item not exist");
+            throw new BusinessException(UNPROCESSABLE_CONTENT.value(), "Item not exist");
         }
 
         existItem.setUpdatedAt(LocalDateTime.now());
