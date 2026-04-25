@@ -7,15 +7,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 @ControllerAdvice
 @RestController
 public class GlobalException {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ResponseError> handleException(Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .body(new ResponseError(e.getMessage()));
+    }
+
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ResponseError> handleException(Exception e, WebRequest request) {
+    public ResponseEntity<ResponseError> handleBusinessException(Exception e) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT.value())
                 .body(new ResponseError(e.getMessage()));
     }
