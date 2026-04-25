@@ -23,7 +23,7 @@ public class ImagesGatewayImpl implements ImagesGateway {
     private final SupabaseUsecase supabaseUsecase;
 
     @Override
-    @Transactional(transactionManager = "postgresTransactionManager")
+    @Transactional(transactionManager = "postgreSQLTransactionManager")
     public String uploadImageToSupabaseStorage(MultipartFile file) throws Exception{
         try {
             // Fazer upload no Supabase Storage
