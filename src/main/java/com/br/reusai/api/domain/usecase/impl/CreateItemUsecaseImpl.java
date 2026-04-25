@@ -24,6 +24,5 @@ public class CreateItemUsecaseImpl implements CreateItemUsecase {
         item.setUpdatedAt(LocalDateTime.now());
         log.info("Item created successfully");
         return itemGateway.createItem(item);
-
     }
 }
