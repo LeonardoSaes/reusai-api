@@ -8,6 +8,8 @@ import com.br.reusai.api.host.controller.data.response.CreateItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class ItemGatewayImpl implements ItemGateway {
@@ -38,5 +40,15 @@ public class ItemGatewayImpl implements ItemGateway {
     @Override
     public void deleteItem(String id) {
         itemRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Item> getAllItems() {
+        return itemRepository.findAll().stream().map(itemGatewayConverter::toDomain).toList();
+    }
+
+    @Override
+    public List<Item> getItemsByCategory(String category) {
+        return itemRepository.findItemByCategory(category).stream().map(itemGatewayConverter::toDomain).toList();
     }
 }

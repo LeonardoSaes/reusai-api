@@ -23,11 +23,9 @@ public class ImagesGatewayImpl implements ImagesGateway {
     private final SupabaseUsecase supabaseUsecase;
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "postgresTransactionManager")
     public String uploadImageToSupabaseStorage(MultipartFile file) throws Exception{
         try {
-            log.info("Iniciando upload para Supabase Storage: {}", file.getOriginalFilename());
-
             // Fazer upload no Supabase Storage
             String publicUrl = supabaseUsecase.execute(file);
             log.info("Upload no Supabase Storage realizado com sucesso. URL: {}", publicUrl);
