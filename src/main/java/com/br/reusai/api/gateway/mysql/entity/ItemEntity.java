@@ -28,7 +28,7 @@ public class ItemEntity {
     @Column(nullable = false, length = 255)
     private String category;
 
-    @Column(length = 20)
+    @Column(length = 255)
     private String imageUrl;
 
     @Column(nullable = false)
