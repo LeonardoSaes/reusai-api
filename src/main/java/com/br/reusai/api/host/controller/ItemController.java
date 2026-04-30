@@ -5,13 +5,10 @@ import com.br.reusai.api.domain.usecase.*;
 import com.br.reusai.api.host.controller.converter.ItemControllerConverter;
 import com.br.reusai.api.host.controller.data.request.CreateItemRequest;
 import com.br.reusai.api.host.controller.data.response.CreateItemResponse;
-import com.br.reusai.api.host.controller.data.response.UploadImageResponse;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,7 +21,6 @@ public class ItemController {
     private final CreateItemUsecase createItemUsecase;
     private final UpdateItemUsecase updateItemUsecase;
     private final DeleteItemUsecase deleteItemUsecase;
-    private final UploadImageUsecase uploadImageUsecase;
     private final GetAllItemsUsecase getAllItemsUsecase;
     private final GetItemByCategoryUsecase getItemByCategoryUsecase;
 
@@ -43,13 +39,6 @@ public class ItemController {
     public ResponseEntity<Void> deleteItem(@PathVariable String id) {
         deleteItemUsecase.execute(id);
         return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-    @PostMapping("/upload-image")
-    public ResponseEntity<UploadImageResponse> uploadImage(@RequestParam("file") MultipartFile file){
-        return ResponseEntity.status(HttpStatus.OK).body(new UploadImageResponse(
-                uploadImageUsecase.execute(file),
-                "Upload realizado com sucesso"));
     }
 
     @GetMapping()
