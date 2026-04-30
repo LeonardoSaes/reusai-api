@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    mysql:
+      jdbcUrl: ${MYSQL_URL}
+      username: ${MYSQL_USERNAME}
+      password: ${MYSQL_PASSWORD}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    postgresql:
+      jdbcUrl: ${POSTGRESQL_URL}
+      username: ${POSTGRESQL_USERNAME}
+      password: ${POSTGRESQL_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
+
+supabase:
+  url: ${SUPABASE_URL}
+  key: ${SUPABASE_KEY}
+  bucket: images
