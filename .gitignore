@@ -3,6 +3,12 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Secrets e variáveis de ambiente
+.env
+.env.local
+application-*.yml
+!application.yml
+
 ### STS ###
 .apt_generated
 .classpath
