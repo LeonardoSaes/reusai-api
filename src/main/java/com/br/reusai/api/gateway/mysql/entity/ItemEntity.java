@@ -19,6 +19,10 @@ public class ItemEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user", nullable = false)
+    private UserEntity user;
+
     @Column(nullable = false, length = 100)
     private String title;
 
