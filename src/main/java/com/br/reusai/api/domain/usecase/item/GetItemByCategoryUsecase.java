@@ -1,4 +1,4 @@
-package com.br.reusai.api.domain.usecase;
+package com.br.reusai.api.domain.usecase.item;
 
 import com.br.reusai.api.domain.model.Item;
 import java.util.List;

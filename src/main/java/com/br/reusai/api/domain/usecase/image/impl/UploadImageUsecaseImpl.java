@@ -1,8 +1,8 @@
-package com.br.reusai.api.domain.usecase.impl;
+package com.br.reusai.api.domain.usecase.image.impl;
 
 import com.br.reusai.api.domain.exception.ImageUploadException;
-import com.br.reusai.api.domain.usecase.UploadImageUsecase;
-import com.br.reusai.api.gateway.impl.ImagesGatewayImpl;
+import com.br.reusai.api.domain.usecase.image.UploadImageUsecase;
+import com.br.reusai.api.gateway.mysql.impl.ImagesGatewayImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

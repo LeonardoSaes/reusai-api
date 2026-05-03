@@ -1,7 +1,7 @@
-package com.br.reusai.api.domain.usecase;
+package com.br.reusai.api.domain.usecase.image;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public interface SupabaseUsecase {
+public interface UploadImageUsecase {
     String execute(MultipartFile file);
 }

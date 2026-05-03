@@ -33,5 +33,6 @@ public class UserEntity {
     private String cep;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(nullable = true)
     private List<ItemEntity> items = new ArrayList<>();
 }

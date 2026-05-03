@@ -1,6 +1,6 @@
 package com.br.reusai.api.host.controller;
 
-import com.br.reusai.api.domain.usecase.UploadImageUsecase;
+import com.br.reusai.api.domain.usecase.image.UploadImageUsecase;
 import com.br.reusai.api.host.controller.data.response.UploadImageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
-package com.br.reusai.api.domain.usecase.impl;
+package com.br.reusai.api.domain.usecase.item.impl;
 
 import com.br.reusai.api.domain.model.Item;
-import com.br.reusai.api.domain.usecase.CreateItemUsecase;
+import com.br.reusai.api.domain.usecase.item.CreateItemUsecase;
 import com.br.reusai.api.gateway.ItemGateway;
 import com.br.reusai.api.host.controller.data.response.CreateItemResponse;
 import lombok.RequiredArgsConstructor;

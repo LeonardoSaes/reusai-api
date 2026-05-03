@@ -1,7 +1,7 @@
 package com.br.reusai.api.host.controller;
 
 import com.br.reusai.api.domain.model.Item;
-import com.br.reusai.api.domain.usecase.*;
+import com.br.reusai.api.domain.usecase.item.*;
 import com.br.reusai.api.host.controller.converter.ItemControllerConverter;
 import com.br.reusai.api.host.controller.data.request.CreateItemRequest;
 import com.br.reusai.api.host.controller.data.response.CreateItemResponse;
@@ -23,6 +23,7 @@ public class ItemController {
     private final DeleteItemUsecase deleteItemUsecase;
     private final GetAllItemsUsecase getAllItemsUsecase;
     private final GetItemByCategoryUsecase getItemByCategoryUsecase;
+    private final GetItemByIdUsecase getItemByIdUsecase;
 
     @PostMapping
     public ResponseEntity<CreateItemResponse> createItem(@RequestBody CreateItemRequest createItemRequest) {
@@ -49,5 +50,10 @@ public class ItemController {
     @GetMapping("/category/{category}")
     public ResponseEntity<List<Item>> getItemsByCategory(@PathVariable String category){
         return ResponseEntity.status(HttpStatus.OK).body(getItemByCategoryUsecase.execute(category));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Item> getItemById(@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(getItemByIdUsecase.getItemById(id));
     }
 }
