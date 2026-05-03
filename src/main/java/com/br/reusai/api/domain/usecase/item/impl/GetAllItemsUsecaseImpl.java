@@ -1,7 +1,7 @@
-package com.br.reusai.api.domain.usecase.impl;
+package com.br.reusai.api.domain.usecase.item.impl;
 
 import com.br.reusai.api.domain.model.Item;
-import com.br.reusai.api.domain.usecase.GetAllItemsUsecase;
+import com.br.reusai.api.domain.usecase.item.GetAllItemsUsecase;
 import com.br.reusai.api.gateway.ItemGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

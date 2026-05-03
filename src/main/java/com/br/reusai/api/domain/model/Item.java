@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Item {
     private String id;
+    private String idUser;
     private String title;
     private String description;
     private String category;

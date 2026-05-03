@@ -1,17 +1,14 @@
 package com.br.reusai.api.host.controller;
 
 import com.br.reusai.api.domain.model.Item;
-import com.br.reusai.api.domain.usecase.*;
+import com.br.reusai.api.domain.usecase.item.*;
 import com.br.reusai.api.host.controller.converter.ItemControllerConverter;
 import com.br.reusai.api.host.controller.data.request.CreateItemRequest;
 import com.br.reusai.api.host.controller.data.response.CreateItemResponse;
-import com.br.reusai.api.host.controller.data.response.UploadImageResponse;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,9 +21,9 @@ public class ItemController {
     private final CreateItemUsecase createItemUsecase;
     private final UpdateItemUsecase updateItemUsecase;
     private final DeleteItemUsecase deleteItemUsecase;
-    private final UploadImageUsecase uploadImageUsecase;
     private final GetAllItemsUsecase getAllItemsUsecase;
     private final GetItemByCategoryUsecase getItemByCategoryUsecase;
+    private final GetItemByIdUsecase getItemByIdUsecase;
 
     @PostMapping
     public ResponseEntity<CreateItemResponse> createItem(@RequestBody CreateItemRequest createItemRequest) {
@@ -45,13 +42,6 @@ public class ItemController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/upload-image")
-    public ResponseEntity<UploadImageResponse> uploadImage(@RequestParam("file") MultipartFile file){
-        return ResponseEntity.status(HttpStatus.OK).body(new UploadImageResponse(
-                uploadImageUsecase.execute(file),
-                "Upload realizado com sucesso"));
-    }
-
     @GetMapping()
     public ResponseEntity<List<Item>> getAllItems(){
         return ResponseEntity.status(HttpStatus.OK).body(getAllItemsUsecase.execute());
@@ -60,5 +50,10 @@ public class ItemController {
     @GetMapping("/category/{category}")
     public ResponseEntity<List<Item>> getItemsByCategory(@PathVariable String category){
         return ResponseEntity.status(HttpStatus.OK).body(getItemByCategoryUsecase.execute(category));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Item> getItemById(@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(getItemByIdUsecase.getItemById(id));
     }
 }

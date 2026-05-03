@@ -1,8 +1,8 @@
-package com.br.reusai.api.domain.usecase.impl;
+package com.br.reusai.api.domain.usecase.item.impl;
 
 import com.br.reusai.api.domain.exception.BusinessException;
 import com.br.reusai.api.domain.model.Item;
-import com.br.reusai.api.domain.usecase.UpdateItemUsecase;
+import com.br.reusai.api.domain.usecase.item.UpdateItemUsecase;
 import com.br.reusai.api.gateway.ItemGateway;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

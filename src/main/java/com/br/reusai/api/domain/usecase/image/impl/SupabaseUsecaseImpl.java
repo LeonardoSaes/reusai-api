@@ -1,7 +1,7 @@
-package com.br.reusai.api.domain.usecase.impl;
+package com.br.reusai.api.domain.usecase.image.impl;
 
 import com.br.reusai.api.domain.exception.BusinessException;
-import com.br.reusai.api.domain.usecase.SupabaseUsecase;
+import com.br.reusai.api.domain.usecase.image.SupabaseUsecase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

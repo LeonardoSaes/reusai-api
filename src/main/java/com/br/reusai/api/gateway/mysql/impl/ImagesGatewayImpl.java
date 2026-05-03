@@ -1,8 +1,8 @@
-package com.br.reusai.api.gateway.impl;
+package com.br.reusai.api.gateway.mysql.impl;
 
 import com.br.reusai.api.domain.exception.ImageUploadException;
 import com.br.reusai.api.domain.model.Image;
-import com.br.reusai.api.domain.usecase.SupabaseUsecase;
+import com.br.reusai.api.domain.usecase.image.SupabaseUsecase;
 import com.br.reusai.api.gateway.ImagesGateway;
 import com.br.reusai.api.gateway.converter.ImagesGatewayConverter;
 import com.br.reusai.api.gateway.postgre.entity.ImagesEntity;

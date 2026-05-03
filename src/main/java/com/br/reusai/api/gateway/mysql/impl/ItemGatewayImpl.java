@@ -1,4 +1,4 @@
-package com.br.reusai.api.gateway.impl;
+package com.br.reusai.api.gateway.mysql.impl;
 
 import com.br.reusai.api.domain.model.Item;
 import com.br.reusai.api.gateway.ItemGateway;
