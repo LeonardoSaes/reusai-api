@@ -1,14 +1,18 @@
 package com.br.reusai.api.gateway.mysql.impl;
 
+import com.br.reusai.api.domain.exception.BusinessException;
 import com.br.reusai.api.domain.model.Item;
 import com.br.reusai.api.gateway.ItemGateway;
 import com.br.reusai.api.gateway.converter.ItemGatewayConverter;
+import com.br.reusai.api.gateway.mysql.entity.ItemEntity;
 import com.br.reusai.api.gateway.mysql.repository.ItemRepository;
 import com.br.reusai.api.host.controller.data.response.CreateItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_CONTENT;
 
 @Component
 @RequiredArgsConstructor
@@ -19,7 +23,9 @@ public class ItemGatewayImpl implements ItemGateway {
 
     @Override
     public CreateItemResponse createItem(Item item) {
-        return itemGatewayConverter.toCreateItemResponse(itemRepository.save(itemGatewayConverter.toEntity(item)));
+        validateUserId(item.getIdUser());
+        ItemEntity itemEntity = itemGatewayConverter.toEntity(item);
+        return itemGatewayConverter.toCreateItemResponse(itemRepository.save(itemEntity));
     }
 
     @Override
@@ -29,7 +35,9 @@ public class ItemGatewayImpl implements ItemGateway {
 
     @Override
     public void updateItem(Item item) {
-        itemRepository.save(itemGatewayConverter.toEntity(item));
+        validateUserId(item.getIdUser());
+        ItemEntity itemEntity = itemGatewayConverter.toEntity(item);
+        itemRepository.save(itemEntity);
     }
 
     @Override
@@ -50,5 +58,11 @@ public class ItemGatewayImpl implements ItemGateway {
     @Override
     public List<Item> getItemsByCategory(String category) {
         return itemRepository.findItemByCategory(category).stream().map(itemGatewayConverter::toDomain).toList();
+    }
+
+    private void validateUserId(String idUser) {
+        if (idUser == null || idUser.isBlank()) {
+            throw new BusinessException(UNPROCESSABLE_CONTENT.value(), "User id is required");
+        }
     }
 }
