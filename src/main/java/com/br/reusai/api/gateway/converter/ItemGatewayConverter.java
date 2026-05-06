@@ -12,6 +12,7 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ItemGatewayConverter {
+    @Mapping(source = "user.id", target = "idUser")
     Item toDomain(ItemEntity itemEntity);
 
     @Mapping(source = "idUser", target = "user")
