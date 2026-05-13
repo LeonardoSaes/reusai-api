@@ -17,4 +17,8 @@ public class User {
     private String photoUrl;
     private String cep;
     private List<Item> items;
+    private Boolean accountNonExpired;
+    private Boolean accountNonLocked;
+    private Boolean credentialsNonExpired;
+    private Boolean enabled;
 }

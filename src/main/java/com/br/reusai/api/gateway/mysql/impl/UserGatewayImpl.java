@@ -6,6 +6,7 @@ import com.br.reusai.api.gateway.converter.UserGatewayConverter;
 import com.br.reusai.api.gateway.mysql.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -25,5 +26,10 @@ public class UserGatewayImpl implements UserGateway {
     public User getUserByEmail(String email) {
         var userEntity = userRepository.findUserByEmail(email);
         return userEntity != null ? userGatewayConverter.toDomain(userEntity) : null;
+    }
+
+    @Override
+    public UserDetails getUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 }

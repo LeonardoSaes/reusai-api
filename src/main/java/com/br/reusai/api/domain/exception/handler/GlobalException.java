@@ -1,6 +1,7 @@
 package com.br.reusai.api.domain.exception.handler;
 
 import com.br.reusai.api.domain.exception.BusinessException;
+import com.br.reusai.api.domain.exception.InvalidJwtAuthenticationException;
 import com.br.reusai.api.domain.exception.ResponseError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,12 @@ public class GlobalException {
     @ExceptionHandler(MissingServletRequestPartException.class)
     public ResponseEntity<ResponseError> handleImageUploadException(Exception e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
+                .body(new ResponseError(e.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public ResponseEntity<ResponseError> handleInvalidJwtException(Exception e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN.value())
                 .body(new ResponseError(e.getMessage()));
     }
 }
