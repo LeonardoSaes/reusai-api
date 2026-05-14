@@ -8,7 +8,6 @@ public record CreateItemRequest(
         String category,
         StatusEnum status,
         Boolean availableToChange,
-        String imageUrl,
-        String idUser
+        String imageUrl
 ) {
 }

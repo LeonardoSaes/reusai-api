@@ -15,6 +15,10 @@ public record CreateUserRequest(
         String photoUrl,
         @NotBlank
         String cep,
-        List<Item>items
+        List<Item>items,
+        Boolean accountNonExpired,
+        Boolean accountNonLocked,
+        Boolean credentialsNonExpired,
+        Boolean enabled
 ) {
 }

@@ -2,12 +2,16 @@ package com.br.reusai.api.host.controller;
 
 import com.br.reusai.api.domain.model.Item;
 import com.br.reusai.api.domain.usecase.item.*;
+import com.br.reusai.api.gateway.converter.UserDetailsConverter;
+import com.br.reusai.api.gateway.mysql.entity.UserEntity;
 import com.br.reusai.api.host.controller.converter.ItemControllerConverter;
 import com.br.reusai.api.host.controller.data.request.CreateItemRequest;
 import com.br.reusai.api.host.controller.data.response.CreateItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,15 +28,31 @@ public class ItemController {
     private final GetAllItemsUsecase getAllItemsUsecase;
     private final GetItemByCategoryUsecase getItemByCategoryUsecase;
     private final GetItemByIdUsecase getItemByIdUsecase;
+    private final UserDetailsConverter userDetailsConverter;
 
     @PostMapping
-    public ResponseEntity<CreateItemResponse> createItem(@RequestBody CreateItemRequest createItemRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(createItemUsecase.execute(itemControllerConverter.toDomain(createItemRequest)));
+    public ResponseEntity<CreateItemResponse> createItem(
+            @RequestBody CreateItemRequest createItemRequest,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        UserEntity userEntity = userDetailsConverter.toUserEntity(userDetails);
+        Item item = itemControllerConverter.toDomain(createItemRequest);
+        item.setIdUser(userEntity.getId());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createItemUsecase.execute(item));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> UpdateItem(@PathVariable String id, @RequestBody CreateItemRequest createItemRequest) {
-        updateItemUsecase.execute(id, itemControllerConverter.toDomain(createItemRequest));
+    public ResponseEntity<Void> UpdateItem(
+            @PathVariable String id,
+            @RequestBody CreateItemRequest createItemRequest,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        UserEntity userEntity = userDetailsConverter.toUserEntity(userDetails);
+        Item item = itemControllerConverter.toDomain(createItemRequest);
+        item.setIdUser(userEntity.getId());
+
+        updateItemUsecase.execute(id, item);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

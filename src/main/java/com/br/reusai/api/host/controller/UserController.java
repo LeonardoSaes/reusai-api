@@ -19,7 +19,9 @@ public class UserController {
     private final UserControllerConverter userControllerConverter;
 
     @PostMapping
-    public ResponseEntity<CreateUserResponse> createUser(@RequestBody @Valid CreateUserRequest request) {
+    public ResponseEntity<CreateUserResponse> createUser(
+            @RequestBody @Valid CreateUserRequest request
+    ) {
         String userId = createUserUsecase.execute(userControllerConverter.toDomain(request));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userControllerConverter.toCreateUserResponse(userId));

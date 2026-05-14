@@ -1,4 +1,4 @@
 package com.br.reusai.api.host.controller.data.response;
 
-public record CreateItemResponse(String idUser) {
+public record CreateItemResponse(String userId) {
 }

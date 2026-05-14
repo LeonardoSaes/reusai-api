@@ -5,6 +5,7 @@ import com.br.reusai.api.domain.model.Item;
 import com.br.reusai.api.gateway.ItemGateway;
 import com.br.reusai.api.gateway.converter.ItemGatewayConverter;
 import com.br.reusai.api.gateway.mysql.entity.ItemEntity;
+import com.br.reusai.api.gateway.mysql.entity.UserEntity;
 import com.br.reusai.api.gateway.mysql.repository.ItemRepository;
 import com.br.reusai.api.host.controller.data.response.CreateItemResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,12 @@ public class ItemGatewayImpl implements ItemGateway {
     public CreateItemResponse createItem(Item item) {
         validateUserId(item.getIdUser());
         ItemEntity itemEntity = itemGatewayConverter.toEntity(item);
+
+        // Mapear simples: idUser para UserEntity
+        UserEntity user = new UserEntity();
+        user.setId(item.getIdUser());
+        itemEntity.setUser(user);
+
         return itemGatewayConverter.toCreateItemResponse(itemRepository.save(itemEntity));
     }
 
@@ -37,6 +44,12 @@ public class ItemGatewayImpl implements ItemGateway {
     public void updateItem(Item item) {
         validateUserId(item.getIdUser());
         ItemEntity itemEntity = itemGatewayConverter.toEntity(item);
+
+        // Mapear simples: idUser para UserEntity
+        UserEntity user = new UserEntity();
+        user.setId(item.getIdUser());
+        itemEntity.setUser(user);
+
         itemRepository.save(itemEntity);
     }
 
