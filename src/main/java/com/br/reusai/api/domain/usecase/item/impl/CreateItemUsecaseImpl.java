@@ -18,7 +18,7 @@ public class CreateItemUsecaseImpl implements CreateItemUsecase {
     private final ItemGateway itemGateway;
 
     @Override
-    public CreateItemResponse execute(Item item) throws RuntimeException{
+    public CreateItemResponse execute(Item item){
 
         item.setCreatedAt(LocalDateTime.now());
         item.setUpdatedAt(LocalDateTime.now());

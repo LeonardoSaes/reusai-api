@@ -1,6 +1,6 @@
 package com.br.reusai.api.host.controller;
 
-import com.br.reusai.api.domain.usecase.image.UploadImageUsecase;
+import com.br.reusai.api.domain.usecase.image.SupabaseUsecase;
 import com.br.reusai.api.host.controller.data.response.UploadImageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,12 +14,12 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class UploadImageController {
 
-    private final UploadImageUsecase uploadImageUsecase;
+    private final SupabaseUsecase supabaseUsecase;
 
     @PostMapping("/upload-image")
     public ResponseEntity<UploadImageResponse> uploadImage(@RequestParam("file") MultipartFile file){
         return ResponseEntity.status(HttpStatus.OK).body(new UploadImageResponse(
-                uploadImageUsecase.execute(file),
+                supabaseUsecase.execute(file),
                 "Upload realizado com sucesso"));
     }
 }

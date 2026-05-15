@@ -27,7 +27,6 @@ public class ItemGatewayImpl implements ItemGateway {
         validateUserId(item.getIdUser());
         ItemEntity itemEntity = itemGatewayConverter.toEntity(item);
 
-        // Mapear simples: idUser para UserEntity
         UserEntity user = new UserEntity();
         user.setId(item.getIdUser());
         itemEntity.setUser(user);
@@ -45,7 +44,6 @@ public class ItemGatewayImpl implements ItemGateway {
         validateUserId(item.getIdUser());
         ItemEntity itemEntity = itemGatewayConverter.toEntity(item);
 
-        // Mapear simples: idUser para UserEntity
         UserEntity user = new UserEntity();
         user.setId(item.getIdUser());
         itemEntity.setUser(user);

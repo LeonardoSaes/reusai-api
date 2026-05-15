@@ -43,7 +43,9 @@ public class JwtTokenProvider {
     }
 
     public TokenDTO createAccessToken(String username, List<String> roles){
-        Date now = new Date();
+        long currentTimeSeconds = (System.currentTimeMillis() / 1000) - 2;
+        Date now = new Date(currentTimeSeconds * 1000);
+
         Date validity = new Date(now.getTime() + validityInMilliseconds);
         String accessToken = getAccessToken(username, roles, now, validity);
         String refreshToken = getRefreshToken(username, roles, validity);
@@ -57,11 +59,28 @@ public class JwtTokenProvider {
         );
     }
 
-    private String getRefreshToken(String username, List<String> roles, Date now) {
-        Date refreshTokenValidity = new Date(now.getTime() + (validityInMilliseconds * 3));
+    public TokenDTO createRefreshToken(String refreshToken){
+        if(refreshTokenContainsBearer(refreshToken)){
+            refreshToken = refreshToken.substring("Bearer ".length());
+        }
+
+        JWTVerifier verifier = JWT.require(algorithm).acceptLeeway(10).build();
+        DecodedJWT decodedJWT = verifier.verify(refreshToken);
+
+        String username = decodedJWT.getSubject();
+        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+        return createAccessToken(username, roles);
+    }
+
+    private static boolean refreshTokenContainsBearer(String refreshToken) {
+        return StringUtils.isNotBlank(refreshToken) && refreshToken.startsWith("Bearer ");
+    }
+
+    private String getRefreshToken(String username, List<String> roles, Date validity) {
+        Date refreshTokenValidity = new Date(validity.getTime() + (validityInMilliseconds * 3));
         return JWT.create()
                 .withClaim("roles", roles)
-                .withIssuedAt(now)
+                .withIssuedAt(new Date())
                 .withExpiresAt(refreshTokenValidity)
                 .withSubject(username)
                 .sign(algorithm);
@@ -87,9 +106,8 @@ public class JwtTokenProvider {
 
     private DecodedJWT decodedToken(String token){
         Algorithm alg = Algorithm.HMAC256(secretKey.getBytes());
-        JWTVerifier verifier = JWT.require(alg).build();
-        DecodedJWT decodedJWT = verifier.verify(token);
-        return decodedJWT;
+        JWTVerifier verifier = JWT.require(alg).acceptLeeway(10).build();
+        return verifier.verify(token);
     }
 
     public String resolveToken(HttpServletRequest request){
@@ -101,8 +119,8 @@ public class JwtTokenProvider {
     }
 
     public boolean validateToken(String token){
-        DecodedJWT decodedJWT = decodedToken(token);
         try{
+            DecodedJWT decodedJWT = decodedToken(token);
             if(decodedJWT.getExpiresAt().before(new Date())){
                 return false;
             }

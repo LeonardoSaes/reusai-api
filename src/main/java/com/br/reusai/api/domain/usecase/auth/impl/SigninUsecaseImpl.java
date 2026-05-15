@@ -1,7 +1,7 @@
 package com.br.reusai.api.domain.usecase.auth.impl;
 
 import com.br.reusai.api.domain.config.JwtTokenProvider;
-import com.br.reusai.api.domain.usecase.auth.AuthUsecase;
+import com.br.reusai.api.domain.usecase.auth.SigninUsecase;
 import com.br.reusai.api.gateway.UserGateway;
 import com.br.reusai.api.gateway.converter.UserDetailsConverter;
 import com.br.reusai.api.host.controller.data.request.security.AccountCredencialsDTO;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class AuthUsecaseImpl implements AuthUsecase {
+public class SigninUsecaseImpl implements SigninUsecase {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
@@ -22,7 +22,7 @@ public class AuthUsecaseImpl implements AuthUsecase {
     private final UserDetailsConverter userDetailsConverter;
 
     @Override
-    public TokenDTO signIn(AccountCredencialsDTO credencials) {
+    public TokenDTO execute(AccountCredencialsDTO credencials) {
         if(credencials == null || credencials.getUsername() == null || credencials.getPassword() == null){
             throw new IllegalArgumentException("Username and password must be provided");
         }
