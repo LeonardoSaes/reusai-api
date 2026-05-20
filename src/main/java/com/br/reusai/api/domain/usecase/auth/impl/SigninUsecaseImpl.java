@@ -23,14 +23,14 @@ public class SigninUsecaseImpl implements SigninUsecase {
 
     @Override
     public TokenDTO execute(AccountCredencialsDTO credencials) {
-        if(credencials == null || credencials.getUsername() == null || credencials.getPassword() == null){
-            throw new IllegalArgumentException("Username and password must be provided");
+        if (credencials == null || credencials.getEmail() == null || credencials.getPassword() == null) {
+            throw new IllegalArgumentException("Email and password must be provided");
         }
 
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            credencials.getUsername(),
+                            credencials.getEmail(),
                             credencials.getPassword()
                     )
             );
@@ -38,12 +38,12 @@ public class SigninUsecaseImpl implements SigninUsecase {
             throw new UsernameNotFoundException("Invalid credentials");
         }
 
-        var user = userGateway.getUserByUsername(credencials.getUsername());
-        if(user == null){
-            throw new UsernameNotFoundException("Username " + credencials.getUsername() + " not found");
+        var userDetails = userGateway.getUserDetailsByEmail(credencials.getEmail());
+        if (userDetails == null) {
+            throw new UsernameNotFoundException("Email " + credencials.getEmail() + " not found");
         }
 
-        var userEntity = userDetailsConverter.toUserEntity(user);
-        return jwtTokenProvider.createAccessToken(credencials.getUsername(), userEntity.getRoles());
+        var userEntity = userDetailsConverter.toUserEntity(userDetails);
+        return jwtTokenProvider.createAccessToken(credencials.getEmail(), userEntity.getRoles());
     }
 }

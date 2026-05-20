@@ -41,8 +41,13 @@ public class CreateUserUsecaseImpl implements CreateUserUsecase {
         DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
 
         passwordEncoder.setDefaultPasswordEncoderForMatches(pbkdf2Encoder);
-        var pass = passwordEncoder.encode(user.getPassword());
-        user.setPassword(pass);
+
+        var encodedPassword = passwordEncoder.encode(user.getPassword());
+        if (!encodedPassword.startsWith("{pbkdf2}")) {
+            encodedPassword = "{pbkdf2}" + encodedPassword;
+        }
+
+        user.setPassword(encodedPassword);
         return userGateway.createUser(user);
     }
 }

@@ -18,17 +18,17 @@ public class RefreshTokenUsecaseImpl implements RefreshTokenUsecase {
     private final UserGateway userGateway;
 
     @Override
-    public TokenDTO execute(String username, String refreshToken) {
-        if(isBlank(username) || isBlank(refreshToken)) {
-            throw new UsernameNotFoundException("Invalid username or token");
+    public TokenDTO execute(String email, String refreshToken) {
+        if (isBlank(email) || isBlank(refreshToken)) {
+            throw new UsernameNotFoundException("Invalid email or token");
         }
 
-        var user = userGateway.getUserByUsername(username);
+        var user = userGateway.getUserByEmail(email);
         TokenDTO token;
-        if(user != null){
+        if (user != null) {
             token = jwtTokenProvider.createRefreshToken(refreshToken);
-        } else{
-            throw new UsernameNotFoundException("Username " + username + " not found");
+        } else {
+            throw new UsernameNotFoundException("Email " + email + " not found");
         }
 
         return token;

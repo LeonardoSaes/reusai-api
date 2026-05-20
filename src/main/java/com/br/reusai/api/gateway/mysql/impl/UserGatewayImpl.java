@@ -29,7 +29,7 @@ public class UserGatewayImpl implements UserGateway {
     }
 
     @Override
-    public UserDetails getUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
+    public UserDetails getUserDetailsByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 }

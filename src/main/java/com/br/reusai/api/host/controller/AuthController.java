@@ -27,8 +27,11 @@ public class AuthController {
     }
 
     @Operation(summary = "Refresh token for authenticated user and returns a token")
-    @PutMapping("/refresh/{username}")
-    public ResponseEntity<TokenDTO> refresh(@PathVariable String username, @RequestHeader("Authorization") String refreshToken){
-        return ResponseEntity.status(HttpStatus.OK).body(refreshTokenUsecase.execute(username, refreshToken));
+    @PutMapping("/refresh/{email}")
+    public ResponseEntity<TokenDTO> refresh(
+            @PathVariable("email") String email,
+            @RequestHeader("Authorization") String refreshToken
+    ){
+        return ResponseEntity.status(HttpStatus.OK).body(refreshTokenUsecase.execute(email, refreshToken));
     }
 }
