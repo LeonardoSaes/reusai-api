@@ -1,5 +1,6 @@
 package com.br.reusai.api.gateway.mysql.impl;
 
+import com.br.reusai.api.domain.model.Proposal;
 import com.br.reusai.api.domain.model.User;
 import com.br.reusai.api.gateway.UserGateway;
 import com.br.reusai.api.gateway.converter.UserGatewayConverter;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Slf4j
 @Component
@@ -36,5 +39,10 @@ public class UserGatewayImpl implements UserGateway {
     @Override
     public User getUserById(String id) {
         return userGatewayConverter.toDomain(userRepository.findUserById(id));
+    }
+
+    @Override
+    public List<Proposal> getProposalsByIdUserFrom(String userId) {
+        return List.of();
     }
 }
