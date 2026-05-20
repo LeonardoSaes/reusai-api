@@ -1,3 +1,4 @@
+/*
 package com.br.reusai.api.gateway.mysql.impl;
 
 import com.br.reusai.api.domain.exception.ImageUploadException;
@@ -47,3 +48,4 @@ public class ImagesGatewayImpl implements ImagesGateway {
         }
     }
 }
+*/

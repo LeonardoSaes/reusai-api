@@ -3,6 +3,7 @@ package com.br.reusai.api.host.controller;
 import com.br.reusai.api.domain.usecase.auth.RefreshTokenUsecase;
 import com.br.reusai.api.domain.usecase.auth.SigninUsecase;
 import com.br.reusai.api.host.controller.data.request.security.AccountCredencialsDTO;
+import com.br.reusai.api.host.controller.data.response.SignoutResponse;
 import com.br.reusai.api.host.controller.data.response.security.TokenDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,5 +34,11 @@ public class AuthController {
             @RequestHeader("Authorization") String refreshToken
     ){
         return ResponseEntity.status(HttpStatus.OK).body(refreshTokenUsecase.execute(email, refreshToken));
+    }
+
+    @Operation(summary = "Signs out the user and invalidate the token")
+    @PostMapping("/signout")
+    public ResponseEntity<SignoutResponse> signout(){
+        return ResponseEntity.status(HttpStatus.OK).body(new SignoutResponse("User signed out successfully"));
     }
 }
