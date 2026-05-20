@@ -1,0 +1,31 @@
+package com.br.reusai.api.host.controller.data;
+
+import com.br.reusai.api.utils.constants.StatusProposalEnum;
+
+public record CompleteProposal(
+        UserSnapshot userFrom,
+        ItemSnapshot itemFrom,
+        UserSnapshot userTo,
+        ItemSnapshot itemTo,
+        StatusProposalEnum statusProposal
+) {
+
+    public record UserSnapshot(
+            String id,
+            String username,
+            String email,
+            String photoUrl
+    ) {
+    }
+
+    public record ItemSnapshot(
+            String id,
+            String title,
+            String description,
+            String category,
+            String imageUrl,
+            String status,
+            Boolean availableToChange
+    ) {
+    }
+}

@@ -32,4 +32,9 @@ public class UserGatewayImpl implements UserGateway {
     public UserDetails getUserDetailsByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
+
+    @Override
+    public User getUserById(String id) {
+        return userGatewayConverter.toDomain(userRepository.findUserById(id));
+    }
 }

@@ -2,9 +2,7 @@ package com.br.reusai.api.gateway.mysql.entity;
 
 import com.br.reusai.api.utils.constants.StatusProposalEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "proposal")
