@@ -19,12 +19,12 @@ public class GetItemByIdUsecaseImpl implements GetItemByIdUsecase {
     private final ItemGateway itemGateway;
 
     @Override
-    public Item getItemById(String itemId) {
-        Item item = itemGateway.getItemById(itemId);
+    public Item getItemById(String userId) {
+        Item item = itemGateway.getItemById(userId);
         if(isNull(item)){
             log.error("Item not exist");
             throw new BusinessException(UNPROCESSABLE_CONTENT.value(), "Item not exist");
         }
-        return itemGateway.getItemById(itemId);
+        return itemGateway.getItemById(userId);
     }
 }

@@ -28,6 +28,7 @@ public class ItemController {
     private final GetAllItemsUsecase getAllItemsUsecase;
     private final GetItemByCategoryUsecase getItemByCategoryUsecase;
     private final GetItemByIdUsecase getItemByIdUsecase;
+    private final GetItemByUserIdUsecase getItemByUserIdUsecase;
     private final UserDetailsConverter userDetailsConverter;
 
     @PostMapping
@@ -75,5 +76,10 @@ public class ItemController {
     @GetMapping("/{id}")
     public ResponseEntity<Item> getItemById(@PathVariable String id){
         return ResponseEntity.status(HttpStatus.OK).body(getItemByIdUsecase.getItemById(id));
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Item>> getItemsByUserId(@PathVariable String userId){
+        return ResponseEntity.status(HttpStatus.OK).body(getItemByUserIdUsecase.execute(userId));
     }
 }

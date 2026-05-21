@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.br.reusai.api.domain.exception.InvalidJwtAuthenticationException;
 import com.br.reusai.api.host.controller.data.response.security.TokenDTO;
+import com.br.reusai.api.gateway.UserGateway;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +35,9 @@ public class JwtTokenProvider {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private UserGateway userGateway;
+
     Algorithm algorithm = null;
 
     @PostConstruct
@@ -42,15 +46,15 @@ public class JwtTokenProvider {
         algorithm = Algorithm.HMAC256(secretKey.getBytes());
     }
 
-    public TokenDTO createAccessToken(String username, List<String> roles){
+    public TokenDTO createAccessToken(String userId, List<String> roles){
         long currentTimeSeconds = (System.currentTimeMillis() / 1000) - 2;
         Date now = new Date(currentTimeSeconds * 1000);
 
         Date validity = new Date(now.getTime() + validityInMilliseconds);
-        String accessToken = getAccessToken(username, roles, now, validity);
-        String refreshToken = getRefreshToken(username, roles, validity);
+        String accessToken = getAccessToken(userId, roles, now, validity);
+        String refreshToken = getRefreshToken(userId, roles, validity);
         return new TokenDTO(
-                username,
+                userId,
                 true,
                 now,
                 validity,
@@ -67,40 +71,46 @@ public class JwtTokenProvider {
         JWTVerifier verifier = JWT.require(algorithm).acceptLeeway(10).build();
         DecodedJWT decodedJWT = verifier.verify(refreshToken);
 
-        String username = decodedJWT.getSubject();
+        String userId = decodedJWT.getSubject();
         List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
-        return createAccessToken(username, roles);
+        return createAccessToken(userId, roles);
     }
 
     private static boolean refreshTokenContainsBearer(String refreshToken) {
         return StringUtils.isNotBlank(refreshToken) && refreshToken.startsWith("Bearer ");
     }
 
-    private String getRefreshToken(String username, List<String> roles, Date validity) {
+    private String getRefreshToken(String userId, List<String> roles, Date validity) {
         Date refreshTokenValidity = new Date(validity.getTime() + (validityInMilliseconds * 3));
         return JWT.create()
                 .withClaim("roles", roles)
                 .withIssuedAt(new Date())
                 .withExpiresAt(refreshTokenValidity)
-                .withSubject(username)
+                .withSubject(userId)
                 .sign(algorithm);
     }
 
-    private String getAccessToken(String username, List<String> roles, Date now, Date validity) {
+    private String getAccessToken(String userId, List<String> roles, Date now, Date validity) {
         String issuerUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
         return JWT.create()
                 .withClaim("roles", roles)
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
-                .withSubject(username)
+                .withSubject(userId)
                 .withIssuer(issuerUrl)
                 .sign(algorithm);
     }
 
     public Authentication getAuthentication(String token){
         DecodedJWT decodedJWT = JWT.decode(token);
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(decodedJWT.getSubject());
+        String sub = decodedJWT.getSubject();
 
+        var userById = userGateway.getUserById(sub);
+        if (userById != null) {
+            return new UsernamePasswordAuthenticationToken(userById, "", userById.getAuthorities());
+        }
+
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(sub);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

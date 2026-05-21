@@ -44,6 +44,10 @@ public class SigninUsecaseImpl implements SigninUsecase {
         }
 
         var userEntity = userDetailsConverter.toUserEntity(userDetails);
-        return jwtTokenProvider.createAccessToken(credencials.getEmail(), userEntity.getRoles());
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("User details invalid for email " + credencials.getEmail());
+        }
+
+        return jwtTokenProvider.createAccessToken(userEntity.getId(), userEntity.getRoles());
     }
 }

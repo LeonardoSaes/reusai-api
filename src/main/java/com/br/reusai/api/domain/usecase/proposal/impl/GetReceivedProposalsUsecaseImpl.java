@@ -1,7 +1,7 @@
 package com.br.reusai.api.domain.usecase.proposal.impl;
 
 import com.br.reusai.api.domain.model.Proposal;
-import com.br.reusai.api.domain.usecase.proposal.GetSentProposalsUsecase;
+import com.br.reusai.api.domain.usecase.proposal.GetReceivedProposalsUsecase;
 import com.br.reusai.api.gateway.ItemGateway;
 import com.br.reusai.api.gateway.ProposalGateway;
 import com.br.reusai.api.gateway.UserGateway;
@@ -15,7 +15,7 @@ import static com.br.reusai.api.utils.constants.BuildCompleteProposals.getComple
 
 @Component
 @RequiredArgsConstructor
-public class GetSentProposalsUsecaseImpl implements GetSentProposalsUsecase {
+public class GetReceivedProposalsUsecaseImpl implements GetReceivedProposalsUsecase {
 
     private final ProposalGateway proposalGateway;
     private final UserGateway userGateway;
@@ -23,8 +23,9 @@ public class GetSentProposalsUsecaseImpl implements GetSentProposalsUsecase {
 
     @Override
     public List<CompleteProposal> execute(String idUser) {
-        List<Proposal> proposals = proposalGateway.getProposalsByIdUserFrom(idUser);
+        List<Proposal> proposals = proposalGateway.getProposalsByIdUserTo(idUser);
 
         return getCompleteProposals(proposals, userGateway, itemGateway);
     }
+
 }

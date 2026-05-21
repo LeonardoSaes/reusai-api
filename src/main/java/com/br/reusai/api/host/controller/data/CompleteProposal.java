@@ -1,5 +1,6 @@
 package com.br.reusai.api.host.controller.data;
 
+import com.br.reusai.api.utils.constants.StatusEnum;
 import com.br.reusai.api.utils.constants.StatusProposalEnum;
 
 public record CompleteProposal(
@@ -24,7 +25,7 @@ public record CompleteProposal(
             String description,
             String category,
             String imageUrl,
-            String status,
+            StatusEnum status,
             Boolean availableToChange
     ) {
     }
