@@ -31,11 +31,18 @@ public class UpdateItemUsecaseImpl implements UpdateItemUsecase {
         }
 
         existItem.setUpdatedAt(LocalDateTime.now());
-        existItem.setCreatedAt(LocalDateTime.now());
+        // Do not reset createdAt on updates; keep original creation timestamp.
+        // existItem.setCreatedAt(LocalDateTime.now());
+
         existItem.setCategory(item.getCategory());
         existItem.setDescription(item.getDescription());
         existItem.setStatus(item.getStatus());
-        existItem.setImageUrl(item.getImageUrl());
+
+        // Only overwrite imageUrl if caller provided a new value.
+        if (!isNull(item.getImageUrl()) && !item.getImageUrl().isBlank()) {
+            existItem.setImageUrl(item.getImageUrl());
+        }
+
         existItem.setTitle(item.getTitle());
         existItem.setAvailableToChange(item.getAvailableToChange());
         itemGateway.updateItem(existItem);
