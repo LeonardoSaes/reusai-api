@@ -13,4 +13,5 @@ public interface ItemGateway {
     void deleteItem(String id);
     List<Item> getAllItems();
     List<Item> getItemsByCategory(String category);
+    List<Item> getItemByUserId(String userId);
 }

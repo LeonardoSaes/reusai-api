@@ -32,6 +32,7 @@ public class ProposalEntity {
     private String idItemTo;
 
     // indica o status da proposta, se foi aceita, recusada ou se ainda está pendente
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private StatusProposalEnum statusProposal;
 }

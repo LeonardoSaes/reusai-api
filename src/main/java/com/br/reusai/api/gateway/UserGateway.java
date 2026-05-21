@@ -7,5 +7,6 @@ public interface UserGateway {
     String createUser(User user);
     User getUserByEmail(String email);
     UserDetails getUserDetailsByEmail(String email);
-    User getUserById(String id);
+    UserDetails getUserById(String id);
+    User getUserDomainById(String id);
 }

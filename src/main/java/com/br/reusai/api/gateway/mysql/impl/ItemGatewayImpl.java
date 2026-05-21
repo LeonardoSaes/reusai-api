@@ -71,6 +71,11 @@ public class ItemGatewayImpl implements ItemGateway {
         return itemRepository.findItemByCategory(category).stream().map(itemGatewayConverter::toDomain).toList();
     }
 
+    @Override
+    public List<Item> getItemByUserId(String userId) {
+        return itemRepository.findItemByUserId(userId).stream().map(itemGatewayConverter::toDomain).toList();
+    }
+
     private void validateUserId(String idUser) {
         if (idUser == null || idUser.isBlank()) {
             throw new BusinessException(UNPROCESSABLE_CONTENT.value(), "User id is required");
