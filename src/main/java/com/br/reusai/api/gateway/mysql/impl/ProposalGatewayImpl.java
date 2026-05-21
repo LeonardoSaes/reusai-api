@@ -94,11 +94,24 @@ public class ProposalGatewayImpl implements ProposalGateway {
 
     @Override
     public List<Proposal> getProposalsByIdUserFrom(String userId) {
-        return proposalGatewayConverter.toDomain(proposalRepository.findProposalsByIdUserFrom(userId));
+        return proposalGatewayConverter.toListDomain(proposalRepository.findProposalsByIdUserFrom(userId));
     }
 
     @Override
     public List<Proposal> getProposalsByIdUserTo(String userId) {
-        return proposalGatewayConverter.toDomain(proposalRepository.findProposalsByIdUserTo(userId));
+        return proposalGatewayConverter.toListDomain(proposalRepository.findProposalsByIdUserTo(userId));
+    }
+
+    @Override
+    public Proposal getProposalById(String id) {
+        return proposalGatewayConverter.toDomain(proposalRepository.findById(id).orElse(null));
+    }
+
+    @Override
+    public void updateProposalStatus(String id, StatusProposalEnum status) {
+        proposalRepository.findById(id).ifPresent(proposalEntity -> {
+            proposalEntity.setStatusProposal(status);
+            proposalRepository.save(proposalEntity);
+        });
     }
 }

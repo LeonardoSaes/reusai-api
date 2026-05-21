@@ -10,5 +10,6 @@ import static org.mapstruct.ReportingPolicy.IGNORE;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = IGNORE)
 public interface ProposalGatewayConverter {
-    List<Proposal> toDomain(List<ProposalEntity> proposalEntity);
+    List<Proposal> toListDomain(List<ProposalEntity> proposalEntity);
+    Proposal toDomain(ProposalEntity proposalEntity);
 }

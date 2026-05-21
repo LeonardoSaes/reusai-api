@@ -10,4 +10,6 @@ public interface ProposalGateway {
     CompleteProposal createProposal(String idUserFrom, String idUserTo, String idItemFrom, String idItemTo, StatusProposalEnum status);
     List<Proposal> getProposalsByIdUserFrom(String userId);
     List<Proposal> getProposalsByIdUserTo(String userId);
+    Proposal getProposalById(String id);
+    void updateProposalStatus(String id, StatusProposalEnum status);
 }
