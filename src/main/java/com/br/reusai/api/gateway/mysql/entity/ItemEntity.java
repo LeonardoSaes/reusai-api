@@ -32,7 +32,7 @@ public class ItemEntity {
     @Column(nullable = false, length = 255)
     private String category;
 
-    @Column(length = 255)
+    @Column(name = "image_url", length = 255)
     private String imageUrl;
 
     @Column(nullable = false)
