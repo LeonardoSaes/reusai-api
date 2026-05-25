@@ -12,4 +12,5 @@ public interface ItemRepository extends JpaRepository<ItemEntity, String> {
     ItemEntity findItemById(String id);
     List<ItemEntity> findItemByCategory(String category);
     List<ItemEntity> findItemByUserId(String userId);
+    List<ItemEntity> findItemByUserIdNotOrderByCreatedAtAsc(String userId);
 }

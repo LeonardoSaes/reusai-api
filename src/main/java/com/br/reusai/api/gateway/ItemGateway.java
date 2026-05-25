@@ -14,4 +14,5 @@ public interface ItemGateway {
     List<Item> getAllItems();
     List<Item> getItemsByCategory(String category);
     List<Item> getItemByUserId(String userId);
+    List<Item> getItemsNotMine(String userId);
 }

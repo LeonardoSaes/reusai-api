@@ -68,6 +68,7 @@ public class ProposalGatewayImpl implements ProposalGateway {
         newProposal.setId(saved.getId());
 
         return new CompleteProposal(
+                saved.getId(),
                 new CompleteProposal.UserSnapshot(userFrom.getId(), userFrom.getUsername(), userFrom.getEmail(), userFrom.getPhotoUrl()),
                 new CompleteProposal.ItemSnapshot(
                         itemFrom.getId(),

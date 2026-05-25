@@ -20,6 +20,7 @@ public class BuildCompleteProposals {
             var itemTo = itemGateway.getItemById(proposal.getIdItemTo());
 
             CompleteProposal completeProposal = new CompleteProposal(
+                    proposal.getId(),
                     new CompleteProposal.UserSnapshot(userFrom.getId(), userFrom.getUsername(), userFrom.getEmail(), userFrom.getPhotoUrl()),
                     new CompleteProposal.ItemSnapshot(itemFrom.getId(), itemFrom.getTitle(), itemFrom.getDescription(), itemFrom.getCategory(), itemFrom.getImageUrl(), itemFrom.getStatus(), itemFrom.getAvailableToChange()),
                     new CompleteProposal.UserSnapshot(userTo.getId(), userTo.getUsername(), userTo.getEmail(), userTo.getPhotoUrl()),

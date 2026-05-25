@@ -4,6 +4,7 @@ import com.br.reusai.api.utils.constants.StatusEnum;
 import com.br.reusai.api.utils.constants.StatusProposalEnum;
 
 public record CompleteProposal(
+        String id,
         UserSnapshot userFrom,
         ItemSnapshot itemFrom,
         UserSnapshot userTo,

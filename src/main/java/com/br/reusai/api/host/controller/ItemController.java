@@ -30,6 +30,7 @@ public class ItemController {
     private final GetItemByIdUsecase getItemByIdUsecase;
     private final GetItemByUserIdUsecase getItemByUserIdUsecase;
     private final UserDetailsConverter userDetailsConverter;
+    private final GetItemsNotMineUsecase getItemsNotMineUsecase;
 
     @PostMapping
     public ResponseEntity<CreateItemResponse> createItem(
@@ -81,5 +82,10 @@ public class ItemController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Item>> getItemsByUserId(@PathVariable String userId){
         return ResponseEntity.status(HttpStatus.OK).body(getItemByUserIdUsecase.execute(userId));
+    }
+
+    @GetMapping("/not-mine/{userId}")
+    public ResponseEntity<List<Item>> getItemsByUserIdNotMine(@PathVariable String userId){
+        return ResponseEntity.status(HttpStatus.OK).body(getItemsNotMineUsecase.execute(userId));
     }
 }
