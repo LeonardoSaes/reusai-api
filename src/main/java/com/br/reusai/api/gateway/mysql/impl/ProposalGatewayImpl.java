@@ -26,7 +26,7 @@ public class ProposalGatewayImpl implements ProposalGateway {
     @Override
     public CompleteProposal createProposal(String idUserFrom, String idUserTo, String idItemFrom, String idItemTo, StatusProposalEnum statusProposal) {
 
-        var userFrom = userRepository.findUserById(idUserFrom);
+        var userFrom = userRepository.findUserDetailsById(idUserFrom);
         if (userFrom == null) {
             throw new IllegalArgumentException("UserFrom not found: " + idUserFrom);
         }
@@ -36,7 +36,7 @@ public class ProposalGatewayImpl implements ProposalGateway {
             throw new IllegalArgumentException("ItemFrom not found: " + idItemFrom);
         }
 
-        var userTo = userRepository.findUserById(idUserTo);
+        var userTo = userRepository.findUserDetailsById(idUserTo);
         if (userTo == null) {
             throw new IllegalArgumentException("UserTo not found: " + idUserTo);
         }

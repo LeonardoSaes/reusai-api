@@ -105,7 +105,7 @@ public class JwtTokenProvider {
         DecodedJWT decodedJWT = JWT.decode(token);
         String sub = decodedJWT.getSubject();
 
-        var userById = userGateway.getUserById(sub);
+        var userById = userGateway.getUserDetailsById(sub);
         if (userById != null) {
             return new UsernamePasswordAuthenticationToken(userById, "", userById.getAuthorities());
         }

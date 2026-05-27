@@ -34,12 +34,17 @@ public class UserGatewayImpl implements UserGateway {
     }
 
     @Override
-    public UserDetails getUserById(String id) {
-        return userRepository.findUserById(id);
+    public UserDetails getUserDetailsById(String id) {
+        return userRepository.findUserDetailsById(id);
     }
 
     @Override
     public User getUserDomainById(String id) {
-        return userGatewayConverter.toDomain(userRepository.findUserById(id));
+        return userGatewayConverter.toDomain(userRepository.findUserDetailsById(id));
+    }
+
+    @Override
+    public User getUserById(String userId) {
+        return userGatewayConverter.toDomain(userRepository.findUserById(userId));
     }
 }
